@@ -76,6 +76,13 @@ $context = stream_context_create($options);
 // send POST request
 $response = file_get_contents($url, false, $context);
 
+// download the response
+if($response) {
+  header('Content-type: application/json');
+  echo $response;
+  exit;
+}
+
 // download the debug output
 if($debug == 1) {
   $file = fopen("email.json", "w");
