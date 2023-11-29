@@ -78,6 +78,7 @@ $response = file_get_contents($url, false, $context);
 
 // download the response
 if($response) {
+  header('Content-Disposition: attachment; filename="response.json"');
   header('Content-type: application/json');
   echo $response;
   exit;
