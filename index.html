@@ -11,6 +11,34 @@
       gtag('js', new Date());
     
       gtag('config', 'G-2SJVD8680E');
+
+        const measurement_id = `G-2SJVD8680E`;
+        const api_secret = `ZsOSwY0sSlWNKzIm6gj5Lw`;
+        function getCookie(name) {
+            const cookies = document.cookie.split(';');
+            for (const cookie of cookies) {
+                const [cookieName, cookieValue] = cookie.split('=');
+                if (cookieName.trim() === name) {
+                    return cookieValue;
+                }
+            }
+            return null;
+        }
+        const gaCookie = getCookie('_ga');
+        const [, , id1, id2] = gaCookie ? gaCookie.split('.') : [];
+        const clientId = id1 && id2 ? `${id1}.${id2}` : null;
+        if (clientId) {
+            fetch(`https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`, {
+                method: "POST",
+                body: JSON.stringify({
+                    client_id: clientId,
+                    events: [{
+                        name: "email_open",
+                        params: {},
+                    }]
+                })
+            });
+        }
     </script>
     <title>Template</title>
 </head>
