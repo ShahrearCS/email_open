@@ -28,7 +28,9 @@ if ($clientId) {
         'events' => [
             [
                 'name' => 'email_open',
-                'params' => [],
+                'params' => [
+                    'patient_id' => '4404'
+                ],
             ],
         ],
     ];
