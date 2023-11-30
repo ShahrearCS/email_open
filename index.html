@@ -16,6 +16,85 @@
 </head>
 <body>
     <h1>Welcome!</h1>
-    <img src="https://email-open.vercel.app/email.php?subject=Test&template=mailTemplateSample" alt=" " />
+<!--     <img src="https://email-open.vercel.app/email.php?subject=Test&template=mailTemplateSample" alt=" " /> -->
+    <script>
+        function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.split('=');
+        if (cookieName.trim() === name) {
+            return cookieValue;
+        }
+    }
+    return null;
+}
+
+function sendPostRequest(url, data, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                callback(null, xhr.responseText);
+            } else {
+                callback(xhr.status, null);
+            }
+        }
+    };
+    xhr.send(JSON.stringify(data));
+}
+
+const mid = "G-2SJVD8680E";
+const secret = "ZsOSwY0sSlWNKzIm6gj5Lw";
+const debug = 0;
+
+const gaCookie = getCookie('_ga');
+const [, , id1, id2] = gaCookie ? gaCookie.split('.') : [];
+const clientId = id1 && id2 ? `${id1}.${id2}` : null;
+
+if (!clientId) {
+    console.error('Client ID undefined');
+} else {
+    const ga4SessionCookie = `_ga_${mid.replace('G-', '')}`;
+    const ga4SessionCookieValue = getCookie(ga4SessionCookie);
+    const sessionParts = ga4SessionCookieValue ? ga4SessionCookieValue.split('.') : [];
+    const sessionId = sessionParts[2];
+
+    const data = {
+        client_id: clientId,
+        non_personalized_ads: false,
+        events: [
+            {
+                name: 'email_open',
+                params: {
+                    param1: 'test'
+                }
+            }
+        ]
+    };
+
+    const analyticsUrl = `https://www.google-analytics.com/mp/collect?api_secret=${secret}&measurement_id=${mid}`;
+
+    sendPostRequest(analyticsUrl, data, function (status, response) {
+        if (status === null) {
+            // Successful request
+            console.log(response);
+
+            // Download the debug output
+            if (debug === 1) {
+                const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = 'email.json';
+                link.click();
+            }
+        } else {
+            // Error in the request
+            console.error(`Error ${status} in sending the POST request`);
+        }
+    });
+}
+    </script>
 </body>
 </html>
