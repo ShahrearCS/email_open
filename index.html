@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+  <head>
+  <script>
+    function onSubmit(token) {
+      alert('thanks ' + document.getElementById('field').value);
+    }
+
+    function validate(event) {
+      event.preventDefault();
+      if (!document.getElementById('field').value) {
+        alert("You must add text to the required field");
+      } else {
+        grecaptcha.execute();
+      }
+    }
+
+    function onload() {
+      var element = document.getElementById('submit');
+      element.onclick = validate;
+    }
+  </script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </head>
+  <body>
+    <form>
+      Name: (required) <input id="field" name="field">
+      <div id="recaptcha" class="g-recaptcha"
+          data-sitekey="6Ld8dZIqAAAAAFirZ5FKtOPmK_m6G2o4csA3v0Ye"
+          data-callback="onSubmit"
+          data-size="invisible"></div>
+      <button id="submit">submit</button>
+    </form>
+    <script>onload();</script>
+  </body>
+</html>
+<!--<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google tag (gtag.js) -->
+     Google tag (gtag.js) -->
 <!--     <script async src="https://www.googletagmanager.com/gtag/js?id=G-2SJVD8680E"></script> -->
-    <script>
+   <!-- <script>
       // window.dataLayer = window.dataLayer || [];
       // function gtag(){dataLayer.push(arguments);}
       // gtag('js', new Date());
@@ -37,7 +72,7 @@
     <h1>Welcome!</h1>
 <!--     <a href="https://www.example.com">Visit Example.com</a> -->
 <!--     <img src="https://www.google-analytics.com/collect?v=2&&tid=G-2SJVD8680E&dl=doc1&cid=2SJVD8680E&ev=tested&en=email_open_MPLTC12345678_12345678&t=event&ec=email&ea=open&el=TEST_[CPSO]&cs=newsletter&cm=email&cn=MPGS_[DATETIME]" alt="" /> -->
-        <img style="display:none;" src="https://www.google-analytics.com/g/collect?v=2&tid=G-2SJVD8680E&cid=2SJVD8680E&en=fake_MPGS_12345678_12345678_12345678"  alt=""/>
+     <!--     <img style="display:none;" src="https://www.google-analytics.com/g/collect?v=2&tid=G-2SJVD8680E&cid=2SJVD8680E&en=fake_MPGS_12345678_12345678_12345678"  alt=""/>-->
 <!--         <img src="https://www.google-analytics.com/g/collect?v=2&tid=G-2SJVD8680E&cid=2SJVD8680E&en=email_open_MPGS_12345678_12345678_12345678"  alt=""/>
         <img src="https://www.google-analytics.com/g/collect?v=2&tid=G-2SJVD8680E&cid=2SJVD8680E&en=email_open_MPGS_12345678_12345678"  alt=""/>
         <img src="https://www.google-analytics.com/g/collect?v=2&tid=G-2SJVD8680E&cid=2SJVD8680E&en=email_open_MPGS_12345678"  alt=""/>
@@ -56,5 +91,5 @@
                 })
                 .catch(error => console.error('Error:', error));
     </script> -->
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->
